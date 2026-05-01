@@ -38,6 +38,51 @@ var OutputImagesTypes = []SupportedOutputImageType{
 	{Name: "TIFF", Value: TIFF},
 }
 
+type WatermarkType int
+
+const (
+	WatermarkTypeNone WatermarkType = iota
+	WatermarkTypeText
+	WatermarkTypeImage
+)
+
+type WatermarkPosition int
+
+const (
+	PositionTopLeft WatermarkPosition = iota
+	PositionTopCenter
+	PositionTopRight
+	PositionMiddleLeft
+	PositionCenter
+	PositionMiddleRight
+	PositionBottomLeft
+	PositionBottomCenter
+	PositionBottomRight
+)
+
+type WatermarkOptions struct {
+	Type         WatermarkType     `json:"type"`
+	Text         string            `json:"text"`
+	FontPath     string            `json:"font_path"`
+	FontSize     float64           `json:"font_size"`
+	FontColor    string            `json:"font_color"`
+	ImagePath    string            `json:"image_path"`
+	Opacity      float64           `json:"opacity"`
+	Position     WatermarkPosition `json:"position"`
+	OffsetX      int               `json:"offset_x"`
+	OffsetY      int               `json:"offset_y"`
+	Rotation     float64           `json:"rotation"`
+	Scale        float64           `json:"scale"`
+}
+
+type RenameOptions struct {
+	Enabled       bool   `json:"enabled"`
+	Template      string `json:"template"`
+	StartIndex    int    `json:"start_index"`
+	IndexPadding  int    `json:"index_padding"`
+	DateFormat    string `json:"date_format"`
+}
+
 type ImageOptions struct {
 	Format          OutputImageType    `json:"dest_format"`
 	Filter          ResampleFilterType `json:"resample_filter"`
@@ -50,6 +95,8 @@ type ImageOptions struct {
 	PNGCompression  int                `json:"png_compression"`
 	AutoOrientation bool               `json:"auto_orientation"`
 	CPUMemUsage     int                `json:"cpu_memory_usage"`
+	Watermark       WatermarkOptions   `json:"watermark"`
+	Rename          RenameOptions      `json:"rename"`
 }
 
 // Website: https://github.com/disintegration/imaging

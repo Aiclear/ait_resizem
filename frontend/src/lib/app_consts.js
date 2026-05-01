@@ -26,6 +26,24 @@ export const KEY_TIFF_COMPRESSION_VALUE = 'resizem-' + version + '-tiff-compress
 export const KEY_PNG_COMPRESSION_VALUE = 'resizem-' + version + '-png-compression-value';
 export const KEY_EXIF_ORIENTATION_VALUE = 'resizem-' + version + '-exif-orientation-value';
 
+export const KEY_WATERMARK_TYPE = 'resizem-' + version + '-watermark-type';
+export const KEY_WATERMARK_TEXT = 'resizem-' + version + '-watermark-text';
+export const KEY_WATERMARK_IMAGE_PATH = 'resizem-' + version + '-watermark-image-path';
+export const KEY_WATERMARK_OPACITY = 'resizem-' + version + '-watermark-opacity';
+export const KEY_WATERMARK_POSITION = 'resizem-' + version + '-watermark-position';
+export const KEY_WATERMARK_OFFSET_X = 'resizem-' + version + '-watermark-offset-x';
+export const KEY_WATERMARK_OFFSET_Y = 'resizem-' + version + '-watermark-offset-y';
+export const KEY_WATERMARK_ROTATION = 'resizem-' + version + '-watermark-rotation';
+export const KEY_WATERMARK_SCALE = 'resizem-' + version + '-watermark-scale';
+export const KEY_WATERMARK_FONT_SIZE = 'resizem-' + version + '-watermark-font-size';
+export const KEY_WATERMARK_FONT_COLOR = 'resizem-' + version + '-watermark-font-color';
+
+export const KEY_RENAME_ENABLED = 'resizem-' + version + '-rename-enabled';
+export const KEY_RENAME_TEMPLATE = 'resizem-' + version + '-rename-template';
+export const KEY_RENAME_START_INDEX = 'resizem-' + version + '-rename-start-index';
+export const KEY_RENAME_INDEX_PADDING = 'resizem-' + version + '-rename-index-padding';
+export const KEY_RENAME_DATE_FORMAT = 'resizem-' + version + '-rename-date-format';
+
 //Keys for event
 export const EVENT_FILE_DROP = 'resizem-' + version + '-file-drop';
 export const EVENT_BEFORE_EXIT = 'resizem-' + version + '-before-exit';

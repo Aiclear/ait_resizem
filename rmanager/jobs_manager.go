@@ -41,21 +41,22 @@ func StartJobs(ctx context.Context, files []string, opts rimage.ImageOptions) {
 	cpu := runtime.NumCPU()
 	workerCount := math.Round(float64(cpu) * float64(opts.CPUMemUsage))
 	swg := sizedwaitgroup.New(int(workerCount)) //Should be better, if we could think about memory limit
-	for _, f := range files {
+	totalFiles := len(files)
+	for i, f := range files {
 		if err := swg.AddWithContext(jobContext); err != nil {
 			log.Println(err)
 			cancel()
 		}
-		go dealWithFile(ctx, &swg, f, opts)
+		go dealWithFile(ctx, &swg, f, opts, i, totalFiles)
 	}
 	swg.Wait()
 }
 
 func dealWithFile(ctx context.Context, wg *sizedwaitgroup.SizedWaitGroup,
-	file string, option rimage.ImageOptions) {
+	file string, option rimage.ImageOptions, index int, total int) {
 	defer wg.Done()
 
-	logMsg := fmt.Sprintf("file: %s, options: %v", file, option)
+	logMsg := fmt.Sprintf("file: %s, options: %v, index: %d, total: %d", file, option, index, total)
 	log.Println(logMsg)
 
 	//Create image instance
@@ -95,8 +96,36 @@ func dealWithFile(ctx context.Context, wg *sizedwaitgroup.SizedWaitGroup,
 	//Do resize job
 	img.Resize(dw, dh, option.Filter)
 
+	// Apply watermark if enabled
+	var processedImg image.Image = img.Data()
+	if option.Watermark.Type != rimage.WatermarkTypeNone {
+		processedImg, err = rimage.AddWatermark(processedImg, option.Watermark)
+		if err != nil {
+			log.Println("Watermark error:", err)
+			msg := FileResult{Name: file, Status: -1, Message: "Watermark error: " + err.Error()}
+			SendFileResultEvent(ctx, msg)
+			return
+		}
+	}
+
+	// Generate new filename if rename is enabled
+	newName := img.Name()
+	if option.Rename.Enabled {
+		originalName, originalExt := rimage.GetOriginalNameFromPath(file)
+		renameCtx := rimage.RenameContext{
+			Index:        index,
+			Total:        total,
+			OriginalName: originalName,
+			OriginalExt:  originalExt,
+			OriginalPath: file,
+			Width:        dw,
+			Height:       dh,
+		}
+		newName = rimage.GenerateNewName(option.Rename.Template, renameCtx, option.Rename)
+	}
+
 	//Write file by format
-	rs, err := writeFileByFormat(dPath, img.Name(), img.Data(), dw, dh, option)
+	rs, err := writeFileByFormat(dPath, newName, processedImg, dw, dh, option)
 	if err != nil {
 		//Event: error
 		log.Println(err)
@@ -112,7 +141,12 @@ func dealWithFile(ctx context.Context, wg *sizedwaitgroup.SizedWaitGroup,
 
 func writeFileByFormat(path, name string, data image.Image,
 	width, height int, option rimage.ImageOptions) (string, error) {
-	file := fmt.Sprintf("%s_%dx%d", name, width, height)
+	var file string
+	if option.Rename.Enabled {
+		file = name
+	} else {
+		file = fmt.Sprintf("%s_%dx%d", name, width, height)
+	}
 	dest := filepath.Join(path, file)
 	switch option.Format {
 	case rimage.BMP:
