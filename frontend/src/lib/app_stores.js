@@ -23,7 +23,23 @@ import {
 	KEY_PNG_COMPRESSION_VALUE,
 	KEY_RESULT_LIST,
 	KEY_TIFF_COMPRESSION_VALUE,
-	KEY_WIDTH_VALUE
+	KEY_WIDTH_VALUE,
+	KEY_WATERMARK_TYPE,
+	KEY_WATERMARK_TEXT,
+	KEY_WATERMARK_IMAGE_PATH,
+	KEY_WATERMARK_OPACITY,
+	KEY_WATERMARK_POSITION,
+	KEY_WATERMARK_OFFSET_X,
+	KEY_WATERMARK_OFFSET_Y,
+	KEY_WATERMARK_ROTATION,
+	KEY_WATERMARK_SCALE,
+	KEY_WATERMARK_FONT_SIZE,
+	KEY_WATERMARK_FONT_COLOR,
+	KEY_RENAME_ENABLED,
+	KEY_RENAME_TEMPLATE,
+	KEY_RENAME_START_INDEX,
+	KEY_RENAME_INDEX_PADDING,
+	KEY_RENAME_DATE_FORMAT
 } from './app_consts';
 
 export let doing = writable(KEY_DOING, false);
@@ -43,3 +59,21 @@ export let gifColorsValue = writable(KEY_GIF_COLORS_VALUE, 256);
 export let tiffCompressionValue = writable(KEY_TIFF_COMPRESSION_VALUE, 0);
 export let pngCompressionValue = writable(KEY_PNG_COMPRESSION_VALUE, -1);
 export let autoExifOrientation = writable(KEY_EXIF_ORIENTATION_VALUE, false);
+
+export let watermarkType = writable(KEY_WATERMARK_TYPE, 0);
+export let watermarkText = writable(KEY_WATERMARK_TEXT, '');
+export let watermarkImagePath = writable(KEY_WATERMARK_IMAGE_PATH, '');
+export let watermarkOpacity = writable(KEY_WATERMARK_OPACITY, 0.5);
+export let watermarkPosition = writable(KEY_WATERMARK_POSITION, 8);
+export let watermarkOffsetX = writable(KEY_WATERMARK_OFFSET_X, 10);
+export let watermarkOffsetY = writable(KEY_WATERMARK_OFFSET_Y, 10);
+export let watermarkRotation = writable(KEY_WATERMARK_ROTATION, 0);
+export let watermarkScale = writable(KEY_WATERMARK_SCALE, 1.0);
+export let watermarkFontSize = writable(KEY_WATERMARK_FONT_SIZE, 24);
+export let watermarkFontColor = writable(KEY_WATERMARK_FONT_COLOR, '#FFFFFF');
+
+export let renameEnabled = writable(KEY_RENAME_ENABLED, false);
+export let renameTemplate = writable(KEY_RENAME_TEMPLATE, '{name}_{index:3}');
+export let renameStartIndex = writable(KEY_RENAME_START_INDEX, 1);
+export let renameIndexPadding = writable(KEY_RENAME_INDEX_PADDING, 3);
+export let renameDateFormat = writable(KEY_RENAME_DATE_FORMAT, 'YYYYMMDD');
