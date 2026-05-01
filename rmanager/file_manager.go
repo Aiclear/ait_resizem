@@ -207,7 +207,6 @@ func detectColorMode(img image.Image) string {
 	}
 
 	hasAlpha := false
-	hasColor := false
 	isGrayscale := true
 
 	for _, p := range samplePoints {
@@ -225,14 +224,6 @@ func detectColorMode(img image.Image) string {
 		// Check if it's grayscale (r == g == b)
 		if r != g || g != b {
 			isGrayscale = false
-			hasColor = true
-		}
-
-		// Check if there's any color
-		if r > 0 || g > 0 || b > 0 {
-			if r != g || g != b {
-				hasColor = true
-			}
 		}
 	}
 
