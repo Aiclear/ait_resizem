@@ -11,7 +11,7 @@ See the Mulan PSL v2 for more details. -->
 <script>
 	import { Listgroup, ListgroupItem } from 'flowbite-svelte';
 	import { filesList, resultList, selectedFile, showImageDetail, imageDetailData, doing } from '$lib/app_stores';
-	import { FileImageOutline, CheckCircleOutline, CloseCircleOutline, InformationCircleOutline } from 'flowbite-svelte-icons';
+	import { FileImageOutline, CheckCircleOutline, CloseCircleOutline, InfoCircleSolid } from 'flowbite-svelte-icons';
 	import { _ } from 'svelte-i18n';
 
 	async function handleFileClick(filePath) {
@@ -40,7 +40,7 @@ See the Mulan PSL v2 for more details. -->
 					<FileImageOutline class="h-5 w-5 flex-shrink-0 {isSelected(item) ? 'text-blue-500' : 'text-gray-500'}" />
 					<span class="truncate" title={item}>{getFileName(item)}</span>
 				</div>
-				<InformationCircleOutline
+				<InfoCircleSolid
 					class="h-4 w-4 flex-shrink-0 {isSelected(item) ? 'text-blue-500' : 'text-gray-400'}"
 					title={$_('file_list.view_details')}
 				/>

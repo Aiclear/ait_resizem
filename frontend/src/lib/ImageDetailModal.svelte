@@ -12,15 +12,7 @@ See the Mulan PSL v2 for more details. -->
 	import { Modal } from 'flowbite-svelte';
 	import { selectedFile, showImageDetail, imageDetailData } from '$lib/app_stores';
 	import { _ } from 'svelte-i18n';
-	import {
-		FileImageOutline,
-		InformationCircleOutline,
-		SizeOutline,
-		ColorSwatchOutline,
-		CalendarOutline,
-		FolderOutline,
-		DocumentOutline
-	} from 'flowbite-svelte-icons';
+	import { FileImageOutline, CheckCircleOutline, InfoCircleSolid } from 'flowbite-svelte-icons';
 
 	let loading = false;
 	let error = null;
@@ -66,7 +58,7 @@ See the Mulan PSL v2 for more details. -->
 {#if $showImageDetail}
 	<Modal bind:open={$showImageDetail} size="lg" on:close={closeModal}>
 		<div class="flex items-center gap-2 border-b border-gray-200 pb-4">
-			<InformationCircleOutline class="h-6 w-6 text-blue-500" />
+			<InfoCircleSolid class="h-6 w-6 text-blue-500" />
 			<h3 class="text-lg font-semibold text-gray-900">
 				{$_('image_detail.title')}
 			</h3>
@@ -90,8 +82,7 @@ See the Mulan PSL v2 for more details. -->
 								{$imageDetailData.file_name}
 							</p>
 							<p class="text-sm text-gray-500 truncate" title={$imageDetailData.directory}>
-								<FolderOutline class="inline h-4 w-4" />
-								{$imageDetailData.directory}
+								📁 {$imageDetailData.directory}
 							</p>
 						</div>
 					</div>
@@ -99,8 +90,7 @@ See the Mulan PSL v2 for more details. -->
 					<div class="grid grid-cols-2 gap-4">
 						<div class="rounded-lg border border-gray-200 p-4">
 							<div class="flex items-center gap-2 text-gray-500">
-								<SizeOutline class="h-4 w-4" />
-								<span class="text-sm">{$_('image_detail.dimensions')}</span>
+								<span class="text-sm">📐 {$_('image_detail.dimensions')}</span>
 							</div>
 							<p class="mt-1 text-lg font-semibold text-gray-900">
 								{$imageDetailData.width} × {$imageDetailData.height} px
@@ -109,8 +99,7 @@ See the Mulan PSL v2 for more details. -->
 
 						<div class="rounded-lg border border-gray-200 p-4">
 							<div class="flex items-center gap-2 text-gray-500">
-								<DocumentOutline class="h-4 w-4" />
-								<span class="text-sm">{$_('image_detail.file_size')}</span>
+								<span class="text-sm">📄 {$_('image_detail.file_size')}</span>
 							</div>
 							<p class="mt-1 text-lg font-semibold text-gray-900">
 								{$imageDetailData.file_size_str}
@@ -119,8 +108,7 @@ See the Mulan PSL v2 for more details. -->
 
 						<div class="rounded-lg border border-gray-200 p-4">
 							<div class="flex items-center gap-2 text-gray-500">
-								<FileImageOutline class="h-4 w-4" />
-								<span class="text-sm">{$_('image_detail.format')}</span>
+								<span class="text-sm">🖼️ {$_('image_detail.format')}</span>
 							</div>
 							<p class="mt-1 text-lg font-semibold text-gray-900 uppercase">
 								{$imageDetailData.format || '-'}
@@ -129,8 +117,7 @@ See the Mulan PSL v2 for more details. -->
 
 						<div class="rounded-lg border border-gray-200 p-4">
 							<div class="flex items-center gap-2 text-gray-500">
-								<ColorSwatchOutline class="h-4 w-4" />
-								<span class="text-sm">{$_('image_detail.color_mode')}</span>
+								<span class="text-sm">🎨 {$_('image_detail.color_mode')}</span>
 							</div>
 							<p class="mt-1 text-lg font-semibold text-gray-900">
 								{$imageDetailData.color_mode || '-'}
@@ -141,8 +128,7 @@ See the Mulan PSL v2 for more details. -->
 					<div class="space-y-3 rounded-lg border border-gray-200 p-4">
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2 text-gray-500">
-								<CalendarOutline class="h-4 w-4" />
-								<span class="text-sm">{$_('image_detail.created_time')}</span>
+								<span class="text-sm">📅 {$_('image_detail.created_time')}</span>
 							</div>
 							<span class="font-medium text-gray-900">
 								{$imageDetailData.created_time || '-'}
@@ -150,8 +136,7 @@ See the Mulan PSL v2 for more details. -->
 						</div>
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2 text-gray-500">
-								<CalendarOutline class="h-4 w-4" />
-								<span class="text-sm">{$_('image_detail.modified_time')}</span>
+								<span class="text-sm">📅 {$_('image_detail.modified_time')}</span>
 							</div>
 							<span class="font-medium text-gray-900">
 								{$imageDetailData.modified_time || '-'}
