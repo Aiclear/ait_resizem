@@ -29,7 +29,23 @@ See the Mulan PSL v2 for more details. -->
 		pngCompressionValue,
 		resultList,
 		tiffCompressionValue,
-		widthValue
+		widthValue,
+		watermarkType,
+		watermarkText,
+		watermarkImagePath,
+		watermarkOpacity,
+		watermarkPosition,
+		watermarkOffsetX,
+		watermarkOffsetY,
+		watermarkRotation,
+		watermarkScale,
+		watermarkFontSize,
+		watermarkFontColor,
+		renameEnabled,
+		renameTemplate,
+		renameStartIndex,
+		renameIndexPadding,
+		renameDateFormat
 	} from '$lib/app_stores';
 	import {
 		EVENT_BACKEND_ERROR,
@@ -133,7 +149,28 @@ See the Mulan PSL v2 for more details. -->
 			tiff_compression: $tiffCompressionValue,
 			png_compression: $pngCompressionValue,
 			auto_orientation: $autoExifOrientation,
-			cpu_memory_usage: $cpuUsageValue
+			cpu_memory_usage: $cpuUsageValue,
+			watermark: {
+				type: $watermarkType,
+				text: $watermarkText,
+				font_path: '',
+				font_size: $watermarkFontSize,
+				font_color: $watermarkFontColor,
+				image_path: $watermarkImagePath,
+				opacity: $watermarkOpacity,
+				position: $watermarkPosition,
+				offset_x: $watermarkOffsetX,
+				offset_y: $watermarkOffsetY,
+				rotation: $watermarkRotation,
+				scale: $watermarkScale
+			},
+			rename: {
+				enabled: $renameEnabled,
+				template: $renameTemplate,
+				start_index: $renameStartIndex,
+				index_padding: $renameIndexPadding,
+				date_format: $renameDateFormat
+			}
 		};
 	}
 </script>

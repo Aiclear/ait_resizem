@@ -19,6 +19,35 @@
 				"title": "高度",
 				"helper1": "只能是数字",
 				"helper2": "非数字或0将会被忽略"
+			},
+			"tab": {
+				"resize": "调整大小",
+				"watermark": "水印",
+				"rename": "重命名"
+			},
+			"watermark": {
+				"type": "水印类型",
+				"text": "水印文字",
+				"text_placeholder": "请输入水印文字...",
+				"image": "水印图片路径",
+				"image_placeholder": "请选择水印图片文件...",
+				"font_size": "字体大小",
+				"font_color": "字体颜色",
+				"position": "位置",
+				"opacity": "透明度",
+				"scale": "缩放",
+				"offset_x": "水平偏移",
+				"offset_y": "垂直偏移",
+				"rotation": "旋转角度"
+			},
+			"rename": {
+				"enabled": "启用批量重命名",
+				"template": "命名模板",
+				"template_help": "可用变量: {name} 原文件名, {index} 序号, {index:3} 带填充的序号, {date} 日期, {width} 宽度, {height} 高度, {size} 尺寸, {total} 总数",
+				"start_index": "起始序号",
+				"index_padding": "序号填充位数",
+				"date_format": "日期格式",
+				"date_format_help": "格式: YYYY(年), YY(年两位), MM(月), DD(日), HH(时), mm(分), ss(秒)"
 			}
 		},
 		"buttons": {
