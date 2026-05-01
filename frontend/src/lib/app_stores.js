@@ -19,9 +19,12 @@ import {
 	KEY_FORMAT_VALUE,
 	KEY_GIF_COLORS_VALUE,
 	KEY_HEIGHT_VALUE,
+	KEY_IMAGE_DETAIL_DATA,
 	KEY_JPEG_QUALITY_VALUE,
 	KEY_PNG_COMPRESSION_VALUE,
 	KEY_RESULT_LIST,
+	KEY_SELECTED_FILE,
+	KEY_SHOW_IMAGE_DETAIL,
 	KEY_TIFF_COMPRESSION_VALUE,
 	KEY_WIDTH_VALUE
 } from './app_consts';
@@ -31,6 +34,9 @@ export let askWheretoSave = writable(KEY_ASK_WHERE_TO_SAVE, false);
 
 export let filesList = writable(KEY_FILES_LIST, []);
 export let resultList = writable(KEY_RESULT_LIST, []);
+export let selectedFile = writable(KEY_SELECTED_FILE, null);
+export let showImageDetail = writable(KEY_SHOW_IMAGE_DETAIL, false);
+export let imageDetailData = writable(KEY_IMAGE_DETAIL_DATA, null);
 
 export let formatValue = writable(KEY_FORMAT_VALUE, 0); //Keep original format
 export let filterValue = writable(KEY_FILTER_VALUE, 1); // Lanczos

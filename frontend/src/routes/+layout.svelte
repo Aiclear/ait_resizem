@@ -12,6 +12,7 @@ See the Mulan PSL v2 for more details. -->
 	// @ts-nocheck
 
 	import AppSidebar from '$lib/AppSidebar.svelte';
+	import ImageDetailModal from '$lib/ImageDetailModal.svelte';
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { EventsEmit, EventsOn } from '$lib/wailsjs/runtime/runtime.js';
@@ -25,9 +26,12 @@ See the Mulan PSL v2 for more details. -->
 		formatValue,
 		gifColorsValue,
 		heightValue,
+		imageDetailData,
 		jpegQualityValue,
 		pngCompressionValue,
 		resultList,
+		selectedFile,
+		showImageDetail,
 		tiffCompressionValue,
 		widthValue
 	} from '$lib/app_stores';
@@ -43,6 +47,8 @@ See the Mulan PSL v2 for more details. -->
 	import { OpenDirectoryDialog, StartHandleFiles } from '$lib/wailsjs/go/rmanager/FileManager';
 
 	let destPath;
+	let err_msg = '';
+	let showAlert = false;
 
 	onMount(() => {
 		EventsOn(EVENT_BACKEND_ERROR, (message) => {
@@ -63,6 +69,9 @@ See the Mulan PSL v2 for more details. -->
 			$filterValue = 1;
 			$widthValue = 0;
 			$heightValue = 0;
+			$selectedFile = null;
+			$showImageDetail = false;
+			$imageDetailData = null;
 		});
 
 		//On Start
@@ -70,6 +79,10 @@ See the Mulan PSL v2 for more details. -->
 			if ($filesList.length <= 0) {
 				return;
 			}
+
+			$selectedFile = null;
+			$showImageDetail = false;
+			$imageDetailData = null;
 
 			if ($askWheretoSave) {
 				OpenDirectoryDialog().then((path) => {
@@ -144,3 +157,5 @@ See the Mulan PSL v2 for more details. -->
 		<slot />
 	</div>
 </div>
+
+<ImageDetailModal />
