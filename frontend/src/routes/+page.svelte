@@ -28,22 +28,22 @@ See the Mulan PSL v2 for more details. -->
 	};
 </script>
 
-<main class="flex h-screen w-full flex-col gap-5">
-	<div class="grid h-max grid-cols-3 gap-5">
+<main class="flex h-screen w-full flex-col gap-5 p-5">
+	<div class="grid grid-cols-3 gap-5 flex-shrink-0">
 		<div class="col-span-2">
 			<FileZone />
 		</div>
-		<div>
+		<div class="max-h-[350px] overflow-y-auto border border-gray-200 rounded-lg p-3">
 			<AppOptions />
 		</div>
 	</div>
 	<div
 		bind:this={scrollableDiv}
-		class="h-full overflow-y-scroll border-2 border-dashed border-gray-300"
+		class="flex-1 min-h-0 overflow-y-auto border-2 border-dashed border-gray-300 rounded-lg"
 	>
 		<AppFilesList />
 	</div>
-	<div class="fixed bottom-5 right-5 z-40 flex w-full items-center justify-center gap-5">
+	<div class="flex-shrink-0 flex w-full items-center justify-center gap-5 pb-5">
 		<AppButtons />
 	</div>
 </main>

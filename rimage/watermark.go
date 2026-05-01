@@ -78,7 +78,10 @@ func addImageWatermark(baseImg *image.NRGBA, opts WatermarkOptions) (image.Image
 		opts.Position, opts.OffsetX, opts.OffsetY,
 	)
 
-	draw.Draw(baseImg, watermarkImg.Bounds().Add(pos), watermarkImg, watermarkImg.Bounds().Min, draw.Over)
+	dstRect := image.Rect(pos.X, pos.Y, pos.X+watermarkImg.Bounds().Dx(), pos.Y+watermarkImg.Bounds().Dy())
+	srcPoint := watermarkImg.Bounds().Min
+
+	draw.Draw(baseImg, dstRect, watermarkImg, srcPoint, draw.Over)
 
 	return baseImg, nil
 }
@@ -88,20 +91,19 @@ func addTextWatermark(baseImg *image.NRGBA, opts WatermarkOptions) (image.Image,
 		return baseImg, nil
 	}
 
-	fontSize := opts.FontSize
-	if fontSize <= 0 {
-		fontSize = 24
-	}
-
-	face := basicfont.Face7x13
-
 	textColor := parseColor(opts.FontColor)
 	if textColor == nil {
 		textColor = color.White
 	}
 
 	lines := strings.Split(opts.Text, "\n")
-	lineHeight := int(fontSize) * 2
+	if len(lines) == 0 {
+		return baseImg, nil
+	}
+
+	face := basicfont.Face7x13
+	lineHeight := 16
+	padding := 10
 
 	maxWidth := 0
 	for _, line := range lines {
@@ -111,10 +113,16 @@ func addTextWatermark(baseImg *image.NRGBA, opts WatermarkOptions) (image.Image,
 		}
 	}
 
-	textImgWidth := maxWidth + 20
-	textImgHeight := len(lines)*lineHeight + 20
+	textImgWidth := maxWidth + padding*2
+	textImgHeight := len(lines)*lineHeight + padding*2
 
 	textImg := image.NewNRGBA(image.Rect(0, 0, textImgWidth, textImgHeight))
+
+	for y := 0; y < textImgHeight; y++ {
+		for x := 0; x < textImgWidth; x++ {
+			textImg.Set(x, y, color.NRGBA{R: 0, G: 0, B: 0, A: 0})
+		}
+	}
 
 	drawer := &font.Drawer{
 		Dst:  textImg,
@@ -122,8 +130,14 @@ func addTextWatermark(baseImg *image.NRGBA, opts WatermarkOptions) (image.Image,
 		Face: face,
 	}
 
+	ascent := face.Metrics().Ascent.Ceil()
+
 	for i, line := range lines {
-		drawer.Dot = fixed.P(10, 10+(i+1)*lineHeight)
+		textWidth := len(line) * 7
+		startX := (textImgWidth - textWidth) / 2
+		baselineY := padding + ascent + i*lineHeight
+
+		drawer.Dot = fixed.P(startX, baselineY)
 		drawer.DrawString(line)
 	}
 
@@ -149,7 +163,10 @@ func addTextWatermark(baseImg *image.NRGBA, opts WatermarkOptions) (image.Image,
 		opts.Position, opts.OffsetX, opts.OffsetY,
 	)
 
-	draw.Draw(baseImg, watermarkImg.Bounds().Add(pos), watermarkImg, watermarkImg.Bounds().Min, draw.Over)
+	dstRect := image.Rect(pos.X, pos.Y, pos.X+watermarkImg.Bounds().Dx(), pos.Y+watermarkImg.Bounds().Dy())
+	srcPoint := watermarkImg.Bounds().Min
+
+	draw.Draw(baseImg, dstRect, watermarkImg, srcPoint, draw.Over)
 
 	return baseImg, nil
 }
@@ -165,7 +182,9 @@ func applyOpacity(img image.Image, opacity float64) image.Image {
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			c := color.NRGBAModel.Convert(img.At(x, y)).(color.NRGBA)
-			c.A = uint8(float64(c.A) * opacity)
+			if c.A > 0 {
+				c.A = uint8(float64(c.A) * opacity)
+			}
 			result.Set(x, y, c)
 		}
 	}
@@ -217,7 +236,7 @@ func calculateWatermarkPosition(baseWidth, baseHeight, watermarkWidth, watermark
 func parseColor(colorStr string) color.Color {
 	colorStr = strings.TrimSpace(colorStr)
 	if colorStr == "" {
-		return color.White
+		return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 	}
 
 	if strings.HasPrefix(colorStr, "#") {
@@ -225,28 +244,28 @@ func parseColor(colorStr string) color.Color {
 	}
 
 	colorMap := map[string]color.Color{
-		"white":   color.White,
-		"black":   color.Black,
-		"red":     color.RGBA{255, 0, 0, 255},
-		"green":   color.RGBA{0, 255, 0, 255},
-		"blue":    color.RGBA{0, 0, 255, 255},
-		"yellow":  color.RGBA{255, 255, 0, 255},
-		"magenta": color.RGBA{255, 0, 255, 255},
-		"cyan":    color.RGBA{0, 255, 255, 255},
-		"gray":    color.RGBA{128, 128, 128, 255},
+		"white":   color.NRGBA{R: 255, G: 255, B: 255, A: 255},
+		"black":   color.NRGBA{R: 0, G: 0, B: 0, A: 255},
+		"red":     color.NRGBA{R: 255, G: 0, B: 0, A: 255},
+		"green":   color.NRGBA{R: 0, G: 255, B: 0, A: 255},
+		"blue":    color.NRGBA{R: 0, G: 0, B: 255, A: 255},
+		"yellow":  color.NRGBA{R: 255, G: 255, B: 0, A: 255},
+		"magenta": color.NRGBA{R: 255, G: 0, B: 255, A: 255},
+		"cyan":    color.NRGBA{R: 0, G: 255, B: 255, A: 255},
+		"gray":    color.NRGBA{R: 128, G: 128, B: 128, A: 255},
 	}
 
 	if c, ok := colorMap[strings.ToLower(colorStr)]; ok {
 		return c
 	}
 
-	return color.White
+	return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 }
 
 func parseHexColor(hex string) color.Color {
 	hex = strings.TrimPrefix(hex, "#")
 
-	var r, g, b, a uint8 = 0, 0, 0, 255
+	var r, g, b, a uint8 = 255, 255, 255, 255
 
 	switch len(hex) {
 	case 3:
@@ -275,7 +294,7 @@ func parseHexColor(hex string) color.Color {
 func parseHexPair(pair string) uint8 {
 	val, err := strconv.ParseUint(pair, 16, 8)
 	if err != nil {
-		return 0
+		return 255
 	}
 	return uint8(val)
 }
