@@ -1,7 +1,7 @@
 {
 	"home": {
 		"dropzone": {
-			"message": "<span class='font-semibold'>點擊上傳</span>",
+			"message": "<span class='font-semibold'>點擊上傳</span> 或 <span class='font-semibold'>拖拽文件夾</span>",
 			"types": "支持圖片格式：BMP, PNG, JPG, JPEG, TIFF, WebP or GIF",
 			"files_selected": "選擇了 {count} 個文件"
 		},
@@ -27,6 +27,21 @@
 			"start": "開始",
 			"clear": "清理"
 		}
+	},
+	"file_list": {
+		"view_details": "查看詳情"
+	},
+	"image_detail": {
+		"title": "圖片詳情",
+		"dimensions": "尺寸",
+		"file_size": "文件大小",
+		"format": "格式",
+		"color_mode": "色彩模式",
+		"created_time": "創建時間",
+		"modified_time": "修改時間",
+		"full_path": "完整路徑",
+		"load_error": "加載圖片詳情失敗",
+		"close": "關閉"
 	},
 	"settings": {
 		"language": {
