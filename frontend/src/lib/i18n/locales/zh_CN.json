@@ -1,7 +1,7 @@
 {
 	"home": {
 		"dropzone": {
-			"message": "<span class='font-semibold'>点击上传</span>",
+			"message": "<span class='font-semibold'>点击上传</span> 或 <span class='font-semibold'>拖拽文件夹</span>",
 			"types": "支持图片格式： BMP, PNG, JPG, JPEG, TIFF, WebP or GIF",
 			"files_selected": "选择了 {count} 个文件"
 		},
@@ -27,6 +27,21 @@
 			"start": "开始",
 			"clear": "清理"
 		}
+	},
+	"file_list": {
+		"view_details": "查看详情"
+	},
+	"image_detail": {
+		"title": "图片详情",
+		"dimensions": "尺寸",
+		"file_size": "文件大小",
+		"format": "格式",
+		"color_mode": "色彩模式",
+		"created_time": "创建时间",
+		"modified_time": "修改时间",
+		"full_path": "完整路径",
+		"load_error": "加载图片详情失败",
+		"close": "关闭"
 	},
 	"settings": {
 		"language": {

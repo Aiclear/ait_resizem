@@ -1,7 +1,7 @@
 {
 	"home": {
 		"dropzone": {
-			"message": "<span class='font-semibold'>Click to Upload</span>",
+			"message": "<span class='font-semibold'>Click to Upload</span> or <span class='font-semibold'>Drag Folder</span>",
 			"types": "BMP, PNG, JPG, JPEG, TIF, TIFF, WebP or GIF",
 			"files_selected": "{count} file(s) selected"
 		},
@@ -27,6 +27,21 @@
 			"start": "Start",
 			"clear": "Clear"
 		}
+	},
+	"file_list": {
+		"view_details": "View Details"
+	},
+	"image_detail": {
+		"title": "Image Details",
+		"dimensions": "Dimensions",
+		"file_size": "File Size",
+		"format": "Format",
+		"color_mode": "Color Mode",
+		"created_time": "Created Time",
+		"modified_time": "Modified Time",
+		"full_path": "Full Path",
+		"load_error": "Failed to load image details",
+		"close": "Close"
 	},
 	"settings": {
 		"language": {
